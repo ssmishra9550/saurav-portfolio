@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+// Absolute URLs are required for social preview crawlers (LinkedIn ignores relative og:image paths)
+const SITE_URL = "https://ssmishra9550.github.io/saurav-portfolio/";
+const OG_IMAGE = `${SITE_URL}og-image.png`; // served from public/og-image.png (1200×630)
+const OG_TITLE = "Senior Full-Stack Developer & Solutions Portfolio";
+const OG_DESCRIPTION = "Explore my projects, skills, and experience as a Full-Stack Developer.";
+
 export const metadata: Metadata = {
   title: "Saurav Kumar Mishra | Senior Full-Stack Solutions Engineer & Software Architect",
   description: "Senior Full-Stack Solutions Engineer with 5+ years of experience delivering custom web apps, InsurTech SaaS, enterprise ERP integrations (Dynamics AX, SSIS), Healthcare IT (HL7, EHR), and modern Next.js / .NET Core architectures.",
@@ -23,11 +29,36 @@ export const metadata: Metadata = {
     "Docker"
   ],
   authors: [{ name: "Saurav Kumar Mishra" }],
+  // Base for resolving relative metadata URLs (site is served from the /saurav-portfolio/ sub-path)
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: SITE_URL,
+  },
+  // Open Graph — used by LinkedIn, Facebook, WhatsApp, Slack previews
   openGraph: {
-    title: "Saurav Kumar Mishra | Senior Full-Stack Solutions Engineer",
-    description: "You bring the requirements — I design, architect, and ship the complete software solution.",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Saurav Kumar Mishra — Portfolio",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: OG_IMAGE,
+        secureUrl: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Saurav Kumar Mishra — Senior Full-Stack Developer & Solutions Portfolio",
+        type: "image/png",
+      },
+    ],
+  },
+  // Twitter / X card
+  twitter: {
+    card: "summary_large_image",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+    images: [{ url: OG_IMAGE, alt: "Saurav Kumar Mishra — Senior Full-Stack Developer & Solutions Portfolio" }],
   },
 };
 
